@@ -31,15 +31,13 @@ gem 'redis'
 gem 'image_processing'
 gem 'stimulus-rails'
 gem 'turbo-rails'
-gem 'cocoon'
 gem 'tailwindcss-rails'
 gem 'view_component'
 gem 'simple_form'
 gem 'ransack'
-gem 'attr_encrypted', '~> 3.1.0'
 gem 'actiontext'
 gem 'kaminari'
-
+gem 'annotate'
 
 
 group :development, :test do

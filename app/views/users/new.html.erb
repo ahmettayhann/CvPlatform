@@ -23,6 +23,11 @@
   </div>
 
   <div class="mb-4">
+    <%= f.label :identity_number, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= f.text_field :identity_number, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline #{'border-red-500' if @user.errors[:email].any?}" %>
+  </div>
+
+  <div class="mb-4">
     <%= f.label :email, class: "block text-gray-700 text-sm font-bold mb-2" %>
     <%= f.email_field :email, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline #{'border-red-500' if @user.errors[:email].any?}" %>
   </div>
@@ -34,6 +39,11 @@
       <p class="text-red-500 text-xs italic mt-1"><%= @user.errors[:gsm].join(', ') %></p>
     <% end %>
     <p class="text-gray-600 text-xs italic mt-1">Format: +XX XXXXXXXXXX (e.g., +90 5555555555)</p>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :country, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= f.text_field :country, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline #{'border-red-500' if @user.errors[:country].any?}" %>
   </div>
 
   <div class="mb-4">

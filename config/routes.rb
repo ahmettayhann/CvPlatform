@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :users
-  resources :resumes
+  resources :resumes do
+    collection do
+      get :search
+    end
+  end
 
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
