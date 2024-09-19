@@ -1,16 +1,58 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>CvPlatform</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<html lang="en">
+<head>
+  <title>CV Sharing Platform</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
 
-  <body>
-    <%= yield %>
-  </body>
+<body class="bg-gray-100">
+  <div class="min-h-screen flex flex-col">
+    <nav class="bg-indigo-600">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <%= link_to 'CV Sharing Platform', root_path, class: 'text-white font-bold text-xl' %>
+            </div>
+          </div>
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-4">
+              <%= link_to 'Home', root_path, class: 'text-white hover:bg-indigo-500 px-3 py-2 rounded-md text-sm font-medium' %>
+              <%= link_to 'My CVs', resumes_path, class: 'text-white hover:bg-indigo-500 px-3 py-2 rounded-md text-sm font-medium' %>
+              <% if logged_in? %>
+                <%= link_to 'Profile', edit_user_path(current_user), class: 'text-white hover:bg-indigo-500 px-3 py-2 rounded-md text-sm font-medium' %>
+                <%= link_to 'Log Out', logout_path, method: :delete, class: 'text-white hover:bg-indigo-500 px-3 py-2 rounded-md text-sm font-medium' %>
+              <% else %>
+                <%= link_to 'Log In', login_path, class: 'text-white hover:bg-indigo-500 px-3 py-2 rounded-md text-sm font-medium' %>
+                <%= link_to 'Sign Up', new_user_path, class: 'text-white hover:bg-indigo-500 px-3 py-2 rounded-md text-sm font-medium' %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-grow container mx-auto mt-6 px-4 sm:px-6 lg:px-8">
+      <% flash.each do |key, value| %>
+        <div class="<%= flash_class(key) %> mb-4" role="alert">
+          <%= value %>
+        </div>
+      <% end %>
+      <%= yield %>
+    </main>
+
+    <footer class="bg-white mt-8">
+      <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+        <p class="text-center text-gray-500 text-sm">&copy; 2024 CV Sharing Platform. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+</body>
 </html>

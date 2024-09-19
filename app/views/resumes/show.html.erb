@@ -1,0 +1,37 @@
+<div class="flex space-x-4 mb-6">
+  <%= link_to edit_resume_path(@resume), class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" do %>
+    <i class="fas fa-edit mr-2"></i>
+    <%= t('views.defaults.edit') %>
+  <% end %>
+
+  <%= link_to resumes_path, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:inline-flex" do %>
+    <i class="fas fa-arrow-left mr-2"></i>
+    <%= t('views.defaults.come_back') %>
+  <% end %>
+</div>
+<div class="bg-white shadow-md rounded-lg p-6">
+  <h2 class="text-2xl font-bold mb-4"><%= @resume.title %></h2>
+  <div class="mb-4">
+    <strong>Name:</strong> <%= @resume.user.full_name %>
+  </div>
+  <div class="mb-4">
+    <strong>Description:</strong>
+    <%= @resume.description %>
+  </div>
+  <div class="mb-4">
+    <strong>Hobbies:</strong> <%= @resume.hobbies %>
+  </div>
+  <% if @resume.file.attached? %>
+    <div class="mt-4">
+      <h3 class="text-lg font-medium text-gray-900">Uploaded Resume</h3>
+      <%= link_to "View Resume", rails_blob_path(@resume.file, disposition: "attachment"), class: "mt-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    </div>
+  <% end %>
+  <h3 class="text-xl font-semibold mb-2">Education</h3>
+  <% @resume.resume_schools.each do |resume_school| %>
+    <div class="mb-2">
+      <strong><%= resume_school.school.name %></strong>
+      <p><%= resume_school.start_date.strftime("%B %Y") %> - <%= resume_school.end_date ? resume_school.end_date.strftime("%B %Y") : "Present" %></p>
+    </div>
+  <% end %>
+</div>

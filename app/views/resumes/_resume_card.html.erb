@@ -1,0 +1,14 @@
+<div class="bg-white overflow-hidden shadow-sm rounded-lg hover:shadow-md transition duration-300">
+  <div class="p-6">
+    <div class="flex items-center mb-4">
+      <%= image_tag resume.user.avatar.variant(resize_to_limit: [50, 50]), class: "h-12 w-12 rounded-full mr-4" if resume.user.avatar.attached? %>
+      <div>
+        <h2 class="text-xl font-semibold text-gray-900"><%= resume.user.first_name %> <%= resume.user.last_name %></h2>
+        <p class="text-sm text-gray-600"><%= resume.title %></p>
+      </div>
+    </div>
+    <div class="mt-4">
+      <%= link_to "View CV", resume_path(resume), class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    </div>
+  </div>
+</div>

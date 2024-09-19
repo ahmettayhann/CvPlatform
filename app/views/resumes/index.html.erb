@@ -1,0 +1,26 @@
+<div class="bg-white shadow rounded-lg p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-900">My CVs</h1>
+    <%= link_to 'Create New CV', new_resume_path, class: 'inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' %>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <% @resumes.each do |resume| %>
+      <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="p-5">
+          <h3 class="text-lg leading-6 font-medium text-gray-900"><%= resume.title %></h3>
+          <p class="mt-1 max-w-2xl text-sm text-gray-500">
+            <%= resume.active ? 'Active' : 'Inactive' %>
+          </p>
+          <div class="mt-4 flex justify-between">
+            <%= link_to 'View', resume_path(resume), class: 'text-indigo-600 hover:text-indigo-900' %>
+            <%= link_to 'Edit', edit_resume_path(resume), class: 'text-indigo-600 hover:text-indigo-900' %>
+            <%= link_to 'Delete', resume_path(resume), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-red-600 hover:text-red-900' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <%= paginate @resumes %>
+  </div>
+</div>

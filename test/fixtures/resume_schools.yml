@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  resume: one
+  school: one
+  start_date: 2024-09-18
+  end_date: 2024-09-18
+
+two:
+  resume: two
+  school: two
+  start_date: 2024-09-18
+  end_date: 2024-09-18

@@ -1,0 +1,22 @@
+<div class="nested-fields bg-gray-50 p-4 rounded-md mb-4">
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div>
+      <%= f.label :school_id, class: 'block text-sm font-medium text-gray-700' %>
+      <%= f.collection_select :school_id, School.all, :id, :name, {}, class: 'mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' %>
+    </div>
+
+    <div>
+      <%= f.label :start_date, class: 'block text-sm font-medium text-gray-700' %>
+      <%= f.date_field :start_date, class: 'mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
+    </div>
+
+    <div>
+      <%= f.label :end_date, class: 'block text-sm font-medium text-gray-700' %>
+      <%= f.date_field :end_date, class: 'mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
+    </div>
+  </div>
+
+  <div class="mt-2">
+    <%= link_to 'Remove', '#', class: 'text-sm text-red-600 hover:text-red-900', data: { action: "click->nested-form#remove_association" } %>
+  </div>
+</div>

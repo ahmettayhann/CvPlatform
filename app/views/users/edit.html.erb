@@ -1,0 +1,26 @@
+<div class="bg-white shadow rounded-lg p-6">
+  <h1 class="text-3xl font-bold text-gray-900 mb-6">Edit Profile</h1>
+
+  <%= simple_form_for @user, html: { class: 'space-y-6' } do |f| %>
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <%= f.input :first_name, input_html: { class: 'form-input rounded-md shadow-sm mt-1 block w-full' } %>
+      <%= f.input :last_name, input_html: { class: 'form-input rounded-md shadow-sm mt-1 block w-full' } %>
+      <%= f.input :email, input_html: { class: 'form-input rounded-md shadow-sm mt-1 block w-full' } %>
+      <%= f.input :gsm, input_html: { class: 'form-input rounded-md shadow-sm mt-1 block w-full' } %>
+      <%= f.input :country, input_html: { class: 'form-input rounded-md shadow-sm mt-1 block w-full' } %>
+    </div>
+
+    <div class="mt-6">
+      <%= f.label :avatar, class: 'block text-sm font-medium text-gray-700' %>
+      <div class="mt-2 flex items-center" data-controller="avatar-preview">
+        <%= image_tag @user.avatar.variant(resize_to_limit: [100, 100]), class: "h-12 w-12 rounded-full", data: { avatar_preview_target: "output" } if @user.avatar.attached? %>
+        <span class="ml-5 rounded-md shadow-sm">
+          <%= f.file_field :avatar, class: 'sr-only', data: { action: "change->avatar-preview#preview" } %>
+          <%= f.label :avatar, "Change", class: "cursor-pointer py-2 px-3 border border-gray-300 rounded-md text-sm leading-4 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out" %>
+        </span>
+      </div>
+    </div>
+
+    <%= f.button :submit, "Update Profile", class: 'w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' %>
+  <% end %>
+</div>
