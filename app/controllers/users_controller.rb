@@ -7,7 +7,6 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    byebug
     if @user.save
       session[:user_id] = @user.id
       redirect_to root_path, notice: 'Account created successfully'
@@ -29,10 +28,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def purge_avatar
+    current_user.avatar.purge
+    redirect_to edit_user_path(current_user), notice: 'Avatar removed successfully.'
+  end
+
   private
 
   def user_params
-    byebug
-    params.require(:user).permit(:first_name, :last_name, :email, :gsm, :country, :identity_number, :password, :password_confirmation)
+    params.require(:user).permit(:first_name, :last_name, :email, :gsm, :country, :identity_number, :password, :password_confirmation, :avatar)
   end
 end

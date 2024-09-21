@@ -1,8 +1,10 @@
 class User < ApplicationRecord
   has_secure_password
-  has_many :resumes
+  has_many :resumes, dependent: :destroy
   has_many :schools, through: :resumes
   has_one_attached :avatar
+
+  has_rich_text :description
 
   # Validations
   validates :first_name, presence: true
@@ -14,6 +16,14 @@ class User < ApplicationRecord
 
   # Custom validations
   validate :gsm_format
+
+  def avatar_thumbnail
+    if avatar.attached?
+      avatar.variant(resize_to_fill: [100, 100]).processed
+    else
+      "/images/default_avatar.png"
+    end
+  end
 
   # Custom methods
   def full_name
@@ -39,6 +49,10 @@ class User < ApplicationRecord
 
   def identity_number=(value)
     self.identity_number_ciphertext = encrypt(value) if value.present?
+  end
+
+  def generate_jwt
+    JWT.encode({ id: id, exp: 60.days.from_now.to_i }, Rails.application.secrets.secret_key_base)
   end
 
   private
