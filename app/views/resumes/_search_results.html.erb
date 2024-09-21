@@ -1,0 +1,7 @@
+<%= form_with url: search_resumes_path, method: :get, data: { controller: "search", turbo_frame: "results", search_target: "form" } do |f| %>
+  <%= f.text_field :query, data: { action: "input->search#search" } %>
+<% end %>
+
+<%= turbo_frame_tag "results" do %>
+  <!-- Your search results here -->
+<% end %>

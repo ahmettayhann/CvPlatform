@@ -1,11 +1,10 @@
-<div class="bg-white shadow-md rounded-lg p-6 flex flex-col">
+<div class="bg-white shadow rounded-lg p-4">
   <div class="flex items-center mb-4">
-    <%= image_tag resume.user.avatar.variant(resize_to_limit: [50, 50]), class: "w-12 h-12 rounded-full mr-4" if resume.user.avatar.attached? %>
+    <%= image_tag resume.user.avatar.variant(resize_to_fill: [50, 50]), class: "rounded-full mr-4" if resume.user.avatar.attached? %>
     <div>
-      <h3 class="text-xl font-semibold"><%= resume.title %></h3>
-      <p class="text-gray-600"><%= resume.user.full_name %></p>
+      <h2 class="text-xl font-semibold"><%= resume.user.full_name %></h2>
+      <p class="text-gray-600"><%= resume.title %></p>
     </div>
   </div>
-  <p class="text-gray-700 mb-4 flex-grow"><%= truncate(strip_tags(resume.description.to_s), length: 100) %></p>
-  <%= link_to "View CV", resume_path(resume), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center" %>
+  <%= link_to "View CV", resume_path(resume), class: "text-blue-500 hover:underline" %>
 </div>

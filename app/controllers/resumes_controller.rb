@@ -37,6 +37,11 @@ class ResumesController < ApplicationController
     @resume.destroy
     redirect_to resumes_url, notice: 'Resume was successfully destroyed.'
   end
+
+  def search
+    @resumes = Resume.where("title ILIKE ?", "%#{params[:query]}%").page(params[:page]).per(10)
+    render partial: 'resume_cards', locals: { resumes: @resumes }
+  end
   
   private
   

@@ -1,20 +1,20 @@
 class Resume < ApplicationRecord
   belongs_to :user
-  has_many :resume_schools
+  has_many :resume_schools, dependent: :destroy
   has_many :schools, through: :resume_schools
   
-  has_rich_text :description
   has_one_attached :file
+  has_rich_text :description
 
   validates :title, presence: true
   validate :acceptable_file
-
-  accepts_nested_attributes_for :resume_schools, allow_destroy: true, reject_if: :all_blank
   
+  accepts_nested_attributes_for :resume_schools, reject_if: :all_blank, allow_destroy: true
+
   scope :active, -> { where(active: true) }
 
   def self.ransackable_attributes(auth_object = nil)
-    ["title", "created_at"]
+    ["title", "created_at", "updated_at"]
   end
 
   def self.ransackable_associations(auth_object = nil)

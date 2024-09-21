@@ -1,10 +1,17 @@
 Rails.application.routes.draw do
   root 'home#index'
 
-  resources :users
+  resources :users, only: [:edit, :update] do
+    member do
+      delete 'purge_avatar', to: 'users#purge_avatar'
+    end
+  end
   resources :resumes do
     collection do
       get :search
+    end
+    member do
+      get :download
     end
   end
 
@@ -16,6 +23,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      post 'authenticate', to: 'authentication#authenticate'
       resources :resumes, only: [:index, :show]
     end
   end

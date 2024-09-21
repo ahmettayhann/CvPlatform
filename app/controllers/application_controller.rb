@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception, unless: :api_request?
   include ApplicationHelper
   before_action :require_login
   helper_method :current_user, :logged_in?, :flash_class#, :current_page_class
@@ -28,6 +29,12 @@ class ApplicationController < ActionController::Base
     when :alert then "bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md"
     else "bg-gray-100 border-l-4 border-gray-500 text-gray-700 p-4 rounded-md"
     end
+  end
+
+  private
+
+  def api_request?
+    request.format.json? || request.path.start_with?('/api/')
   end
 
   # def current_page_class(path)

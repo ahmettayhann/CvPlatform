@@ -1,17 +1,20 @@
 import Rails from "@rails/ujs"
-import Turbolinks from "turbolinks"
+import "@hotwired/turbo-rails"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
-import { Cocoon } from "@nathanvda/cocoon"
-import "trix"
-import "@rails/actiontext"
-import "@hotwired/turbo-rails"
-import "../controllers"
+import { Application } from "@hotwired/stimulus"
+import { definitionsFromContext } from "@hotwired/stimulus-webpack-helpers"
+import "stylesheets/application"
+import "cocoon-js"
+import { Turbo } from "@hotwired/turbo-rails"
+Turbo.start()
 
 Rails.start()
-Turbolinks.start()
 ActiveStorage.start()
 
-document.addEventListener("turbolinks:load", function() {
-  Cocoon.init(document);
-});
+// Initialize Stimulus application
+const application = Application.start()
+const context = require.context("../controllers", true, /\.js$/)
+application.load(definitionsFromContext(context))
+require("trix")
+require("@rails/actiontext")

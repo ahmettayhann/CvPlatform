@@ -1,37 +1,57 @@
-<div class="flex space-x-4 mb-6">
-  <%= link_to edit_resume_path(@resume), class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" do %>
-    <i class="fas fa-edit mr-2"></i>
-    <%= t('views.defaults.edit') %>
-  <% end %>
+<div class="max-w-4xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg">
+  <h1 class="text-3xl font-bold mb-6 text-gray-800 border-b pb-2"><%= @resume.title %></h1>
 
-  <%= link_to resumes_path, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:inline-flex" do %>
-    <i class="fas fa-arrow-left mr-2"></i>
-    <%= t('views.defaults.come_back') %>
-  <% end %>
-</div>
-<div class="bg-white shadow-md rounded-lg p-6">
-  <h2 class="text-2xl font-bold mb-4"><%= @resume.title %></h2>
-  <div class="mb-4">
-    <strong>Name:</strong> <%= @resume.user.full_name %>
-  </div>
-  <div class="mb-4">
-    <strong>Description:</strong>
-    <%= @resume.description %>
-  </div>
-  <div class="mb-4">
-    <strong>Hobbies:</strong> <%= @resume.hobbies %>
-  </div>
-  <% if @resume.file.attached? %>
-    <div class="mt-4">
-      <h3 class="text-lg font-medium text-gray-900">Uploaded Resume</h3>
-      <%= link_to "View Resume", rails_blob_path(@resume.file, disposition: "attachment"), class: "mt-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+  <div class="mb-8">
+    <h2 class="text-2xl font-semibold mb-4 text-gray-700">Kişisel Bilgiler</h2>
+    <div class="bg-gray-50 p-4 rounded">
+      <p class="mb-2"><strong>Ad Soyad:</strong> <%= @resume.user.full_name %></p>
+      <p class="mb-2"><strong>E-posta:</strong> <%= @resume.user.email %></p>
+      <p class="mb-2"><strong>Telefon:</strong> <%= @resume.user.gsm || "Belirtilmemiş" %></p>
+      <p><strong>Adres:</strong> <%= @resume.user.country || "Belirtilmemiş" %></p>
     </div>
-  <% end %>
-  <h3 class="text-xl font-semibold mb-2">Education</h3>
-  <% @resume.resume_schools.each do |resume_school| %>
-    <div class="mb-2">
-      <strong><%= resume_school.school.name %></strong>
-      <p><%= resume_school.start_date.strftime("%B %Y") %> - <%= resume_school.end_date ? resume_school.end_date.strftime("%B %Y") : "Present" %></p>
+  </div>
+
+  <div class="mb-8">
+    <h2 class="text-2xl font-semibold mb-4 text-gray-700">CV İçeriği</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <h3 class="font-semibold text-gray-700">Açıklama</h3>
+        <p class="bg-gray-50 p-3 rounded text-gray-600"><%= @resume.description.presence || "Açıklama yok" %></p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-gray-700">Hobiler</h3>
+        <p class="bg-gray-50 p-3 rounded text-gray-600"><%= @resume.hobbies.presence || "Hobi belirtilmemiş" %></p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-gray-700">Durum</h3>
+        <span class="<%= @resume.active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %> px-3 py-1 rounded-full text-sm font-medium">
+          <%= @resume.active ? 'Aktif' : 'Pasif' %>
+        </span>
+      </div>
+      <div>
+        <h3 class="font-semibold text-gray-700">Okullar</h3>
+        <div class="bg-gray-50 p-3 rounded text-gray-600">
+          <% if @resume.resume_schools.any? %>
+            <ul class="list-disc pl-5">
+              <% @resume.resume_schools.each do |resume_school| %>
+                <li><%= resume_school.school.name %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            Okul bilgisi yok
+          <% end %>
+        </div>
+      </div>
     </div>
-  <% end %>
+  </div>
+
+  <div class="mt-8 flex justify-end space-x-4">
+    <%= link_to edit_resume_path(@resume), class: 'flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300' do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+      </svg>
+      Düzenle
+    <% end %>
+    <%= link_to 'Geri', resumes_path, class: 'px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition duration-300' %>
+  </div>
 </div>

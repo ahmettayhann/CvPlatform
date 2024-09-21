@@ -1,13 +1,13 @@
 class HomeController < ApplicationController
-  skip_before_action :require_login, only: [:index]
-
   def index
     @q = Resume.includes(:user).ransack(params[:q])
-    @resumes = @q.result.page(params[:page]).per(10)
-
-    respond_to do |format|
-      format.html
-      format.turbo_stream
+    
+    if params[:q].present?
+      @resumes = @q.result(distinct: true).active
+    else
+      @resumes = Rails.cache.fetch("all_active_resumes", expires_in: 5.minutes) do
+        Resume.includes(:user).active.to_a
+      end
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_09_18_234215) do
+ActiveRecord::Schema.define(version: 2024_09_19_220052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,13 +85,15 @@ ActiveRecord::Schema.define(version: 2024_09_18_234215) do
     t.string "first_name"
     t.string "last_name"
     t.string "email"
-    t.text "gsm"
     t.string "country"
     t.string "password_digest"
-    t.text "identity_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "gsm_ciphertext"
+    t.text "identity_number_ciphertext"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["gsm_ciphertext"], name: "index_users_on_gsm_ciphertext", unique: true, where: "(gsm_ciphertext IS NOT NULL)"
+    t.index ["identity_number_ciphertext"], name: "index_users_on_identity_number_ciphertext", unique: true, where: "(identity_number_ciphertext IS NOT NULL)"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
