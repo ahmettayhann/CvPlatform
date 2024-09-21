@@ -2,7 +2,6 @@ module Api
   module V1
     class ResumesController < BaseController
       def index
-        byebug
         @q = Resume.includes(:user).where(active: true).ransack(params[:q])
         resumes = @q.result(distinct: true)
         render json: { resumes: resumes }, each_serializer: Api::V1::ResumeListSerializer
