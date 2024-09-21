@@ -1,15 +1,22 @@
 module Api
   module V1
-    class ResumesController < ApplicationController
+    class ResumesController < BaseController
       def index
-        @resumes = Resume.active
-        @resumes = @resumes.where("title LIKE ?", "%#{params[:search]}%") if params[:search].present?
-        render json: @resumes.map { |r| { id: r.id, title: r.title, full_name: r.user.full_name } }
+        byebug
+        @q = Resume.includes(:user).where(active: true).ransack(params[:q])
+        resumes = @q.result(distinct: true)
+        render json: { resumes: resumes }, each_serializer: Api::V1::ResumeListSerializer
       end
 
       def show
-        @resume = Resume.find(params[:id])
-        render json: @resume.as_json(include: { user: { only: [:first_name, :last_name, :email, :gsm] } })
+        resume = Resume.find_by(id: params[:id])
+        if resume
+          render json: resume, serializer: Api::V1::ResumeSerializer
+        else
+          render json: { error: 'Resume not found' }, status: :not_found
+        end
+      rescue ActiveRecord::RecordNotFound
+        render json: { error: 'Resume not found' }, status: :not_found
       end
     end
   end

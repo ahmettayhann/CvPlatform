@@ -5,3 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+['ITU', 'ODTU', 'MIT', 'Stanford University'].each do |school_name|
+  School.find_or_create_by!(name: school_name)
+end
