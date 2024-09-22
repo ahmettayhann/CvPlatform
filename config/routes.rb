@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:edit, :update] do
     member do
-      delete 'purge_avatar', to: 'users#purge_avatar'
+      delete 'purge_avatar'
     end
   end
   resources :resumes do

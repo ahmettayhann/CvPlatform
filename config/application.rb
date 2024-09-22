@@ -12,7 +12,6 @@ module CvPlatform
     config.load_defaults 6.1
     config.action_controller.include_all_helpers = true
     config.autoload_paths += %W(#{config.root}/app/serializers)
-
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
@@ -20,5 +19,9 @@ module CvPlatform
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.assets.enabled = true
+    config.assets.version = '1.0'
+    config.assets.precompile += %w( application.tailwind.css )
   end
 end

@@ -31,7 +31,8 @@ gem 'redis'
 gem 'image_processing'
 gem 'stimulus-rails'
 gem 'turbo-rails'
-gem 'tailwindcss-rails'
+gem 'tailwindcss-rails', '~> 2.5.0'
+gem 'sprockets-rails'
 gem 'view_component'
 gem 'simple_form'
 gem 'ransack'
@@ -41,7 +42,7 @@ gem 'annotate'
 gem 'cocoon'
 gem 'jwt'
 gem 'active_model_serializers', '~> 0.10.0'
-
+gem 'importmap-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
