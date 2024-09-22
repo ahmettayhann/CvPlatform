@@ -15,4 +15,8 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
+import "cocoon-js"
 console.log('Hello World from Webpacker')
+
+require("trix")
+require("@rails/actiontext")
