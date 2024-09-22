@@ -6,8 +6,9 @@ module Api
       belongs_to :user, serializer: Api::V1::UserSerializer
       has_many :schools, serializer: Api::V1::SchoolSerializer
 
-      def full_name
-        object.user.full_name
+      def description
+        content = object.description.to_plain_text
+        content.present? ? content : nil
       end
     end
   end
