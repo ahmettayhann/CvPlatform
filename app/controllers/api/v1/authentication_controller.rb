@@ -7,10 +7,17 @@ module Api
         user = User.find_by(email: auth_params[:email])
         if user&.authenticate(auth_params[:password])
           token = user.generate_jwt
-          render json: { auth_token: token }
+          render json: { 
+            auth_token: token,
+            user: UserSerializer.new(user)
+          }
         else
           render json: { error: 'Invalid credentials' }, status: :unauthorized
         end
+      end
+
+      def sign_out
+        head :no_content
       end
 
       private

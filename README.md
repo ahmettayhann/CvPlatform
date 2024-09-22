@@ -97,6 +97,145 @@ Before you begin, ensure you have the following installed:
 2. CV Detail Endpoint:
    - Returns all information for a specific CV by id
 
+## API Documentation
+
+## Base URL
+
+All API requests should be made to: `http://your-api-domain.com/api/v1/`
+
+## Authentication
+
+### Sign Up
+
+1. Make a POST request to `/api/v1/sign_up`
+2. Include the user details in the request body:
+   ```json
+   {
+     "user": {
+       "first_name": "John",
+       "last_name": "Doe",
+       "email": "john@example.com",
+       "password": "your_password",
+       "password_confirmation": "your_password",
+       "country": "USA",
+       "gsm": "+1234567890",
+       "identity_number": "1234567890"
+     }
+   }
+   ```
+3. The response will include an auth token and user data if registration is successful.
+
+### Sign In
+
+1. Make a POST request to `/api/v1/authenticate`
+2. Include your credentials in the request body:
+   ```json
+   {
+     "email": "your.email@example.com",
+     "password": "your_password"
+   }
+   ```
+3. The response will include an auth token and user data if authentication is successful.
+
+### Authentication for Subsequent Requests
+
+All subsequent API requests must include the auth token in the Authorization header:
+
+```
+Authorization: Bearer YOUR_JWT_TOKEN
+```
+
+### Sign Out
+
+1. Make a DELETE request to `/api/v1/sign_out`
+2. Include the auth token in the Authorization header
+3. A successful sign out will return a 204 No Content status
+
+## Resumes
+
+### List Resumes
+
+1. Make a GET request to `/api/v1/resumes`
+2. Optionally, include a search parameter in the query string:
+   `/api/v1/resumes?q[title_cont]=developer`
+3. The response will include an array of resume objects
+
+### Get Resume Details
+
+1. Make a GET request to `/api/v1/resumes/:id`, replacing `:id` with the actual resume ID
+2. The response will include detailed information about the specified resume
+
+## Response Formats
+
+### User Data
+```json
+{
+  "id": 1,
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "john@example.com",
+  "country": "USA",
+  "full_name": "John Doe"
+}
+```
+
+### Resume List Item
+```json
+{
+  "id": 1,
+  "title": "Software Developer",
+  "user": {
+    "id": 1,
+    "full_name": "John Doe"
+  }
+}
+```
+
+### Detailed Resume
+```json
+{
+  "id": 1,
+  "title": "Software Developer",
+  "description": "Experienced developer...",
+  "hobbies": "Coding, reading",
+  "active": true,
+  "user": {
+    "id": 1,
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john@example.com",
+    "country": "USA",
+    "full_name": "John Doe"
+  },
+  "schools": [
+    {
+      "id": 1,
+      "name": "University of Technology",
+      "start_date": "2015-09-01",
+      "end_date": "2019-06-30"
+    }
+  ]
+}
+```
+
+## Error Handling
+
+If an error occurs, the API will return an appropriate HTTP status code and a JSON object containing an error message. For example:
+
+```json
+{
+  "error": "Resume not found"
+}
+```
+
+Common status codes:
+- 200: Successful request
+- 201: Successful creation
+- 204: Successful request with no content to return
+- 401: Unauthorized
+- 404: Resource not found
+- 422: Unprocessable entity (validation errors)
+
 ## Running tests
 
 To run the test suite (focused on authentication and session management):

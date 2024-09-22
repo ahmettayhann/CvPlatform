@@ -4,7 +4,7 @@ module Api
       def index
         @q = Resume.includes(:user).where(active: true).ransack(params[:q])
         resumes = @q.result(distinct: true)
-        render json: { resumes: resumes }, each_serializer: Api::V1::ResumeListSerializer
+        render json: resumes, each_serializer: Api::V1::ResumeListSerializer
       end
 
       def show
