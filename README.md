@@ -67,8 +67,6 @@ Before you begin, ensure you have the following installed:
 
 3. Visit `http://localhost:3000` in your web browser.
 
-## Key Components
-
 ### User Model
 - Fields: first_name, last_name, email, gsm (encrypted), country, password_digest, identity_number (encrypted)
 - Custom authentication implementation

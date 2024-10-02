@@ -29,7 +29,7 @@
                 <%= link_to 'Log Out', logout_path, class: 'text-white hover:bg-indigo-500 px-3 py-2 rounded-md text-sm font-medium', data: { turbo_method: "delete" } %>
               <% else %>
                 <%= link_to 'Log In', login_path, class: 'text-white hover:bg-indigo-500 px-3 py-2 rounded-md text-sm font-medium' %>
-                <%= link_to 'Sign Up', new_user_path, class: 'text-white hover:bg-indigo-500 px-3 py-2 rounded-md text-sm font-medium' if defined?(new_user_path) %>
+                <%= link_to 'Sign Up', signup_path, class: 'text-white hover:bg-indigo-500 px-3 py-2 rounded-md text-sm font-medium' %>
               <% end %>
             </div>
           </div>
